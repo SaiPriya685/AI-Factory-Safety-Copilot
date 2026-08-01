@@ -7,7 +7,6 @@ Features:
 - Console logging
 - File logging
 - Multiple log levels
-- Singleton logger
 """
 
 from __future__ import annotations
@@ -20,54 +19,69 @@ from ai.utils.config import LOG_FILE, LOG_LEVEL
 
 class Logger:
     """
-    Singleton logger class used across the project.
+    Logging utility used across the project.
     """
 
-    _logger = None
+    _loggers = {}
+
 
     @classmethod
-    def get_logger(cls, name: str = "AIFactory") -> logging.Logger:
+    def get_logger(
+        cls,
+        name: str = "AIFactory"
+    ) -> logging.Logger:
         """
         Returns a configured logger instance.
-
-        Parameters
-        ----------
-        name : str
-            Logger name.
-
-        Returns
-        -------
-        logging.Logger
         """
 
-        if cls._logger is not None:
-            return cls._logger
+
+        if name in cls._loggers:
+
+            return cls._loggers[name]
+
 
         logger = logging.getLogger(name)
+
         logger.setLevel(LOG_LEVEL)
 
-        if logger.handlers:
-            return logger
 
         formatter = logging.Formatter(
             fmt="%(asctime)s | %(levelname)-8s | %(name)s | %(message)s",
             datefmt="%Y-%m-%d %H:%M:%S",
         )
 
+
         # Console handler
+
         console_handler = logging.StreamHandler()
-        console_handler.setFormatter(formatter)
+
+        console_handler.setFormatter(
+            formatter
+        )
+
 
         # File handler
+
         file_handler = logging.FileHandler(
             filename=Path(LOG_FILE),
             encoding="utf-8",
         )
-        file_handler.setFormatter(formatter)
 
-        logger.addHandler(console_handler)
-        logger.addHandler(file_handler)
+        file_handler.setFormatter(
+            formatter
+        )
 
-        cls._logger = logger
+
+        logger.addHandler(
+            console_handler
+        )
+
+        logger.addHandler(
+            file_handler
+        )
+
+
+        cls._loggers[name] = logger
+
 
         return logger

@@ -14,7 +14,8 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-MODELS_DIR = BASE_DIR / "models"
+MODELS_DIR = BASE_DIR / "models"      # Python files
+WEIGHTS_DIR = BASE_DIR / "weights"    # AI model files
 OUTPUTS_DIR = BASE_DIR / "outputs"
 
 VIOLATIONS_DIR = OUTPUTS_DIR / "violations"
@@ -45,13 +46,17 @@ SHOW_FPS = True
 # YOLO MODEL PATHS
 # =============================================================================
 
-PERSON_MODEL = MODELS_DIR / "yolo11n.pt"
+PERSON_MODEL = WEIGHTS_DIR / "yolo11n.pt"
 
-HELMET_MODEL = MODELS_DIR / "helmet.pt"
 
-FIRE_MODEL = MODELS_DIR / "fire.pt"
+SAFETY_MODEL = WEIGHTS_DIR / "factory_safety.pt"
+FACTORY_MODEL = WEIGHTS_DIR / "yolo11n.pt"
 
-SMOKE_MODEL = MODELS_DIR / "smoke.pt"
+HELMET_MODEL = WEIGHTS_DIR / "yolo11n.pt"
+
+FIRE_MODEL = WEIGHTS_DIR / "yolo11n.pt"
+
+SMOKE_MODEL = WEIGHTS_DIR / "yolo11n.pt"
 
 # =============================================================================
 # DETECTION SETTINGS
