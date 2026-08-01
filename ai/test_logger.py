@@ -1,5 +1,11 @@
-from utils.logger import logger
+from ai.utils.logger import Logger
 
-logger.info("AI Factory Safety Copilot started")
-logger.warning("Test warning message")
-logger.error("Test error message")
+logger = Logger.get_logger()
+
+logger.info("AI Factory Safety Copilot Started")
+
+logger.warning("Camera not detected")
+
+logger.error("Model loading failed")
+
+logger.debug("Debug message")

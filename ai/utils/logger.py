@@ -1,19 +1,27 @@
 """
 logger.py
 
-Central logging module for AI Factory Safety Copilot.
-Provides reusable logging across all modules.
+Central logging utility for the AI Factory Safety Copilot.
+
+Features:
+- Console logging
+- File logging
+- Multiple log levels
+- Singleton logger
 """
 
+from __future__ import annotations
+
 import logging
-import sys
 from pathlib import Path
 
-from .config import LOG_FILE, LOG_LEVEL
+from ai.utils.config import LOG_FILE, LOG_LEVEL
 
 
-class LoggerManager:
-    """Creates and manages project-wide loggers."""
+class Logger:
+    """
+    Singleton logger class used across the project.
+    """
 
     _logger = None
 
@@ -22,41 +30,44 @@ class LoggerManager:
         """
         Returns a configured logger instance.
 
-        Args:
-            name: Logger name.
+        Parameters
+        ----------
+        name : str
+            Logger name.
 
-        Returns:
-            logging.Logger
+        Returns
+        -------
+        logging.Logger
         """
 
-        if cls._logger:
+        if cls._logger is not None:
             return cls._logger
 
         logger = logging.getLogger(name)
-        logger.setLevel(getattr(logging, LOG_LEVEL.upper(), logging.INFO))
-        logger.propagate = False
+        logger.setLevel(LOG_LEVEL)
 
         if logger.handlers:
             return logger
 
         formatter = logging.Formatter(
             fmt="%(asctime)s | %(levelname)-8s | %(name)s | %(message)s",
-            datefmt="%Y-%m-%d %H:%M:%S"
+            datefmt="%Y-%m-%d %H:%M:%S",
         )
 
-        console_handler = logging.StreamHandler(sys.stdout)
+        # Console handler
+        console_handler = logging.StreamHandler()
         console_handler.setFormatter(formatter)
-        console_handler.setLevel(logging.INFO)
 
-        file_handler = logging.FileHandler(LOG_FILE, encoding="utf-8")
+        # File handler
+        file_handler = logging.FileHandler(
+            filename=Path(LOG_FILE),
+            encoding="utf-8",
+        )
         file_handler.setFormatter(formatter)
-        file_handler.setLevel(logging.DEBUG)
 
         logger.addHandler(console_handler)
         logger.addHandler(file_handler)
 
         cls._logger = logger
+
         return logger
-
-
-logger = LoggerManager.get_logger()

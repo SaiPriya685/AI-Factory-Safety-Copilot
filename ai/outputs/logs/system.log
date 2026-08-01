@@ -1,3 +1,16 @@
 2026-08-01 12:30:53 | INFO     | AIFactory | AI Factory Safety Copilot started
 2026-08-01 12:30:53 | WARNING  | AIFactory | Test warning message
 2026-08-01 12:30:53 | ERROR    | AIFactory | Test error message
+2026-08-01 12:34:04 | INFO     | AIFactory | AI Factory Safety Copilot Started
+2026-08-01 12:34:04 | WARNING  | AIFactory | Camera not detected
+2026-08-01 12:34:04 | ERROR    | AIFactory | Model loading failed
+2026-08-01 12:35:35 | INFO     | AIFactory | AI Factory Safety Copilot Started
+2026-08-01 12:35:35 | WARNING  | AIFactory | Camera not detected
+2026-08-01 12:35:35 | ERROR    | AIFactory | Model loading failed
+2026-08-01 12:35:35 | DEBUG    | AIFactory | Debug message
+2026-08-01 12:39:34 | INFO     | AIFactory | AI Factory Safety Copilot Started
+2026-08-01 12:39:34 | WARNING  | AIFactory | Camera not detected
+2026-08-01 12:39:34 | ERROR    | AIFactory | Model loading failed
+2026-08-01 12:39:34 | DEBUG    | AIFactory | Debug message
+2026-08-01 12:40:36 | INFO     | Camera | Camera initialized successfully.
+2026-08-01 12:40:56 | INFO     | Camera | Camera released.

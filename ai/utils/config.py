@@ -167,7 +167,7 @@ MAX_VIBRATION = 70
 # LOGGING
 # =============================================================================
 
-LOG_LEVEL = "INFO"
+LOG_LEVEL = "DEBUG"
 
 LOG_FILE = LOGS_DIR / "system.log"
 
