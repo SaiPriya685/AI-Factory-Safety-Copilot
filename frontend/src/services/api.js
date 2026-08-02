@@ -5,11 +5,17 @@
  */
 
 // Dynamically load settings from Vite environment variables (.env)
-export const USE_MOCK_DATA = import.meta.env.VITE_USE_MOCK_DATA ? import.meta.env.VITE_USE_MOCK_DATA === 'true' : true;
 
-export const BACKEND_HTTP_URL = import.meta.env.VITE_BACKEND_HTTP_URL || 'http://localhost:8000';
-export const BACKEND_WS_URL = import.meta.env.VITE_BACKEND_WS_URL || 'ws://localhost:8000';
+export const USE_MOCK_DATA =
+  import.meta.env.VITE_USE_MOCK_DATA === 'true';
 
+export const BACKEND_HTTP_URL =
+  import.meta.env.VITE_BACKEND_HTTP_URL ||
+  'https://ai-factory-safety-copilot.onrender.com';
+
+export const BACKEND_WS_URL =
+  import.meta.env.VITE_BACKEND_WS_URL ||
+  'wss://ai-factory-safety-copilot.onrender.com';
 /**
  * Helper to fetch data or fallback to mock if USE_MOCK_DATA is true
  */
