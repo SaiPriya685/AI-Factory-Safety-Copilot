@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { SafetyProvider, useSafety } from './context/SafetyContext';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
@@ -52,6 +52,7 @@ function App() {
 }
 
 export default App;
+
 
 
 
