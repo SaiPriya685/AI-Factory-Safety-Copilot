@@ -1,0 +1,493 @@
+/* Overview Dashboard Grid */
+.overview-grid {
+  display: grid;
+  grid-template-columns: 3.15fr 1.25fr;
+  gap: 12px;
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--font-main); /* IBM Plex Sans */
+}
+
+.left-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+.right-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+}
+
+/* Panel Header - Space Grotesk for panel titles */
+.panel-header-scada {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 6px;
+  margin-bottom: 8px;
+}
+
+.panel-title-scada {
+  font-family: var(--font-title); /* Space Grotesk */
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  letter-spacing: 0.5px;
+}
+
+/* KPI Bar */
+.kpi-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.kpi-item {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-card);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.kpi-item-label {
+  font-family: var(--font-main); /* IBM Plex Sans */
+  font-size: 8.5px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  letter-spacing: 0.5px;
+}
+
+.kpi-item-val {
+  font-family: var(--font-title); /* Space Grotesk for KPI numbers */
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-top: 4px;
+}
+
+/* Sectors Row */
+.sectors-row {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 12px;
+}
+
+/* Floor map visualizer */
+.floor-map-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-card);
+  padding: 12px;
+}
+
+.map-grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+  height: 120px;
+  background-color: #05070a;
+  border: 1px solid var(--border-color);
+  padding: 6px;
+}
+
+.map-sector-block {
+  border: 1px solid var(--border-color);
+  background-color: rgba(255, 255, 255, 0.005);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-fast);
+}
+
+.map-sector-block.status-safe {
+  border-color: var(--border-color);
+}
+
+.map-sector-block.status-warning {
+  border-color: var(--color-warning);
+  background-color: rgba(224, 166, 60, 0.02);
+}
+
+.map-sector-block.status-critical {
+  border-color: var(--color-critical);
+  background-color: rgba(226, 76, 76, 0.02);
+}
+
+.map-sector-label {
+  font-family: var(--font-title); /* Space Grotesk */
+  font-size: 9.5px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.map-sector-pop {
+  font-size: 8.5px;
+  color: var(--text-muted);
+  margin-top: 3px;
+  font-family: var(--font-mono); /* JetBrains Mono */
+}
+
+/* Sector List Cards */
+.zone-list-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-card);
+  padding: 12px;
+}
+
+.zone-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+}
+
+.zone-scada-item {
+  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.005);
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.zone-scada-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.zone-scada-name {
+  font-size: 10.5px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.zone-scada-badge {
+  font-size: 8px;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 1px 4px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-color);
+  font-family: var(--font-mono);
+}
+
+.zone-scada-item.status-safe .zone-scada-badge { color: var(--color-safe); }
+.zone-scada-item.status-warning .zone-scada-badge { color: var(--color-warning); }
+.zone-scada-item.status-critical .zone-scada-badge { color: var(--color-critical); }
+
+.zone-scada-details {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9.5px;
+  color: var(--text-secondary);
+}
+
+/* Equipment Status Table */
+.equipment-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-card);
+  padding: 12px;
+}
+
+.scada-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 11px;
+}
+
+.scada-table th {
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-size: 9px;
+  padding: 6px;
+  border-bottom: 1px solid var(--border-color);
+  letter-spacing: 0.5px;
+}
+
+.scada-table td {
+  padding: 8px 6px;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-secondary);
+}
+
+.scada-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.scada-table tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.005);
+}
+
+/* Right Column Panel Widgets */
+.compliance-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-card);
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.compliance-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.compliance-label {
+  font-size: 9px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+.compliance-value {
+  font-family: var(--font-title); /* Space Grotesk */
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.compliance-status-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 9px;
+  color: var(--text-secondary);
+}
+
+.compliance-ring-container {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.compliance-ring-svg {
+  transform: rotate(-90deg);
+}
+
+.compliance-ring-bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.02);
+  stroke-width: 2.5;
+}
+
+.compliance-ring-fill {
+  fill: none;
+  stroke: var(--color-safe);
+  stroke-width: 2.5;
+  transition: stroke-dashoffset 0.3s;
+}
+
+.compliance-ring-fill.status-warning { stroke: var(--color-warning); }
+.compliance-ring-fill.status-critical { stroke: var(--color-critical); }
+
+.compliance-ring-text {
+  position: absolute;
+  font-size: 9px;
+  font-weight: 500;
+  font-family: var(--font-mono); /* JetBrains Mono */
+  color: var(--text-primary);
+}
+
+/* Active Cameras Status Panel */
+.cameras-status-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-card);
+  padding: 12px;
+}
+
+.camera-status-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.camera-status-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 8px;
+  border: 1px solid var(--border-color);
+  background-color: rgba(255, 255, 255, 0.005);
+  font-size: 10px;
+}
+
+.camera-status-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.camera-state-badge {
+  font-size: 8.5px;
+  font-weight: 500;
+  padding: 1px 4px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+}
+
+.camera-state-badge.active-alert {
+  background: rgba(226, 76, 76, 0.03);
+  border-color: rgba(226, 76, 76, 0.15);
+  color: var(--color-critical);
+}
+
+/* Incident Log Timeline - JetBrains Mono logs and timestamps */
+.timeline-panel {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-card);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 180px;
+  overflow: hidden;
+}
+
+.timeline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 8px;
+}
+
+.timeline-title {
+  font-family: var(--font-title); /* Space Grotesk */
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.timeline-count {
+  font-size: 9px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-color);
+  padding: 1px 5px;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+}
+
+.timeline-scroll {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.timeline-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.005);
+  font-size: 10.5px;
+  transition: var(--transition-fast);
+}
+
+.timeline-item:hover {
+  background-color: rgba(255, 255, 255, 0.01);
+}
+
+.timeline-time {
+  color: var(--text-muted);
+  font-family: var(--font-mono); /* JetBrains Mono */
+  font-size: 9px;
+  white-space: nowrap;
+}
+
+.timeline-type-badge {
+  font-size: 8px;
+  font-weight: 500;
+  padding: 1px 4px;
+  text-transform: uppercase;
+  border-radius: 2px;
+  font-family: var(--font-mono); /* JetBrains Mono */
+}
+
+.timeline-item.safe .timeline-type-badge {
+  background-color: rgba(63, 178, 127, 0.03);
+  border: 1px solid rgba(63, 178, 127, 0.1);
+  color: var(--color-safe);
+}
+
+.timeline-item.warning .timeline-type-badge {
+  background-color: rgba(224, 166, 60, 0.03);
+  border: 1px solid rgba(224, 166, 60, 0.1);
+  color: var(--color-warning);
+}
+
+.timeline-item.critical .timeline-type-badge {
+  background-color: rgba(226, 76, 76, 0.03);
+  border: 1px solid rgba(226, 76, 76, 0.1);
+  color: var(--color-critical);
+}
+
+.timeline-sector-badge {
+  font-size: 8px;
+  border: 1px solid var(--border-color);
+  padding: 1px 3px;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+}
+
+.timeline-message-text {
+  color: var(--text-secondary);
+  font-family: var(--font-main); /* IBM Plex Sans for log messages */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.timeline-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--text-muted);
+  font-size: 10.5px;
+}
+
+/* Responsive Laptop Support (resolutions below 1200px) */
+@media (max-width: 1200px) {
+  .overview-grid {
+    grid-template-columns: 1fr;
+    overflow-y: visible;
+    height: auto;
+  }
+  
+  .left-panel, .right-panel {
+    overflow-y: visible;
+  }
+
+  .kpi-bar {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
