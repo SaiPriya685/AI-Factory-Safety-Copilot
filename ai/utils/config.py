@@ -92,7 +92,7 @@ ENABLE_SOUND_ALERT = True
 # API SETTINGS
 # =============================================================================
 
-BACKEND_URL = "http://localhost:8000"
+BACKEND_URL = "https://ai-factory-safety-copilot.onrender.com"
 
 VIOLATION_API = "/api/violations"
 
