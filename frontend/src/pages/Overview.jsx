@@ -12,8 +12,15 @@ const Overview = () => {
     alerts, 
     isLoading, 
     isError, 
-    retryConnection 
+    retryConnection,
+    setActivePage,
+    setSelectedCameraId
   } = useSafety();
+
+  const handleCameraClick = (camIndex) => {
+    setSelectedCameraId(camIndex);
+    setActivePage('cameras');
+  };
 
   // Telemetry fluctuations state for extreme realism
   const [telemetryValues, setTelemetryValues] = useState({
@@ -383,7 +390,7 @@ const Overview = () => {
             <span className="panel-title-scada">ACTIVE MONITORS STATUS</span>
           </div>
           <div className="camera-status-list">
-            <div className="camera-status-row">
+            <div className="camera-status-row" style={{ cursor: 'pointer' }} onClick={() => handleCameraClick(0)}>
               <span className="camera-status-meta">
                 <span className={`status-dot ${isHelmetAlertActive ? 'dot-warning blink-warning' : 'dot-safe'}`}></span>
                 <span>CAM_SEC_A (HELMET)</span>
@@ -392,7 +399,7 @@ const Overview = () => {
                 {isHelmetAlertActive ? 'WARN' : 'NOMINAL'}
               </span>
             </div>
-            <div className="camera-status-row">
+            <div className="camera-status-row" style={{ cursor: 'pointer' }} onClick={() => handleCameraClick(1)}>
               <span className="camera-status-meta">
                 <span className={`status-dot ${isTrespassAlertActive ? 'dot-critical blink-critical' : 'dot-safe'}`}></span>
                 <span>CAM_SEC_B (BOUNDARY)</span>
@@ -401,7 +408,7 @@ const Overview = () => {
                 {isTrespassAlertActive ? 'ALERT' : 'NOMINAL'}
               </span>
             </div>
-            <div className="camera-status-row">
+            <div className="camera-status-row" style={{ cursor: 'pointer' }} onClick={() => handleCameraClick(2)}>
               <span className="camera-status-meta">
                 <span className={`status-dot ${isFallAlertActive ? 'dot-critical blink-critical' : 'dot-safe'}`}></span>
                 <span>CAM_SEC_C (ACCIDENT)</span>
@@ -410,7 +417,7 @@ const Overview = () => {
                 {isFallAlertActive ? 'ALERT' : 'NOMINAL'}
               </span>
             </div>
-            <div className="camera-status-row">
+            <div className="camera-status-row" style={{ cursor: 'pointer' }} onClick={() => handleCameraClick(3)}>
               <span className="camera-status-meta">
                 <span className={`status-dot ${isFireAlertActive ? 'dot-critical blink-critical' : 'dot-safe'}`}></span>
                 <span>CAM_SEC_D (THERMAL)</span>

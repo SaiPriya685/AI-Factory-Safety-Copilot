@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSafety } from '../context/SafetyContext';
 
 const Cameras = () => {
-  const { alerts, globalStatus } = useSafety();
+  const { alerts, globalStatus, selectedCameraId, setSelectedCameraId } = useSafety();
 
   // Reference for the 4 canvas streams
   const canvasRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
@@ -478,6 +478,54 @@ const Cameras = () => {
     }
   };
 
+  if (selectedCameraId !== null) {
+    const isFocusedAlert = [isHelmetOff, isTrespass, isFall, isFire][selectedCameraId];
+    const camId = ['CAM_A_01', 'CAM_B_02', 'CAM_C_03', 'CAM_D_04'][selectedCameraId];
+    const camName = ['SEC_A // ASSEMBLY_FLOOR', 'SEC_B // LOADING_DOCK', 'SEC_C // SCAFFOLD_ZONE', 'SEC_D // POWER_ANNEX'][selectedCameraId];
+    const errorType = ['PPE_ERRORS', 'BREACHES', 'ACCIDENTS', 'THERMAL_FAULTS'][selectedCameraId];
+    const errorCount = [isHelmetOff ? '01' : '00', isTrespass ? '01' : '00', isFall ? '01' : '00', isFire ? '01' : '00'][selectedCameraId];
+    const sectorState = [isHelmetOff ? 'WARN' : 'NOMINAL', isTrespass ? 'CRIT' : 'NOMINAL', isFall ? 'CRIT' : 'NOMINAL', isFire ? 'CRIT' : 'NOMINAL'][selectedCameraId];
+
+    return (
+      <div className="panel" style={{ height: '100%', padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <button 
+            onClick={() => setSelectedCameraId(null)} 
+            className="simulator-reset-btn" 
+            style={{ margin: 0, padding: '8px 16px', display: 'flex', alignItems: 'center', gap: '6px' }}
+          >
+            ← RETURN TO GRID MATRIX
+          </button>
+          <span className="mono" style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>
+            FOCUS MONITOR: {camId} // {camName}
+          </span>
+        </div>
+
+        <div className="panel" style={{ 
+          flex: 1, 
+          position: 'relative', 
+          display: 'flex', 
+          flexDirection: 'column', 
+          overflow: 'hidden',
+          border: isFocusedAlert ? '1px solid var(--color-critical)' : '1px solid var(--border-color)',
+          background: '#06080c'
+        }}>
+          <canvas 
+            ref={canvasRefs[selectedCameraId]} 
+            width={840} 
+            height={440} 
+            style={{ width: '100%', height: '100%', objectFit: 'contain' }} 
+          />
+          <div style={{ padding: '6px 10px', borderTop: '1px solid var(--border-color)', background: 'rgba(255,255,255,0.01)', display: 'flex', justifyContent: 'space-between', fontSize: '9px', color: 'var(--text-secondary)' }}>
+            <span className="mono">RESOLVED_TRK: 01</span>
+            <span className="mono">{errorType}: {errorCount}</span>
+            <span className="mono">SECTOR_STATE: {sectorState}</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div style={{
       display: 'grid',
@@ -527,13 +575,17 @@ const Cameras = () => {
           minHeight: 0
         }}>
           {/* Camera 1 */}
-          <div className="panel" style={{ 
-            position: 'relative', 
-            display: 'flex', 
-            flexDirection: 'column', 
-            overflow: 'hidden',
-            border: isHelmetOff ? '1px solid var(--color-warning)' : '1px solid var(--border-color)' 
-          }}>
+          <div className="panel" 
+            onDoubleClick={() => setSelectedCameraId(0)}
+            style={{ 
+              position: 'relative', 
+              display: 'flex', 
+              flexDirection: 'column', 
+              overflow: 'hidden',
+              cursor: 'zoom-in',
+              border: isHelmetOff ? '1px solid var(--color-warning)' : '1px solid var(--border-color)' 
+            }}
+          >
             <canvas ref={canvasRefs[0]} width={420} height={220} style={{ width: '100%', flex: 1, objectFit: 'contain' }} />
             <div style={{ padding: '6px 10px', borderTop: '1px solid var(--border-color)', background: 'rgba(255,255,255,0.01)', display: 'flex', justifyContent: 'space-between', fontSize: '9px', color: 'var(--text-secondary)' }}>
               <span className="mono">RESOLVED_TRK: 01</span>
@@ -543,13 +595,17 @@ const Cameras = () => {
           </div>
 
           {/* Camera 2 */}
-          <div className="panel" style={{ 
-            position: 'relative', 
-            display: 'flex', 
-            flexDirection: 'column', 
-            overflow: 'hidden',
-            border: isTrespass ? '1px solid var(--color-critical)' : '1px solid var(--border-color)' 
-          }}>
+          <div className="panel" 
+            onDoubleClick={() => setSelectedCameraId(1)}
+            style={{ 
+              position: 'relative', 
+              display: 'flex', 
+              flexDirection: 'column', 
+              overflow: 'hidden',
+              cursor: 'zoom-in',
+              border: isTrespass ? '1px solid var(--color-critical)' : '1px solid var(--border-color)' 
+            }}
+          >
             <canvas ref={canvasRefs[1]} width={420} height={220} style={{ width: '100%', flex: 1, objectFit: 'contain' }} />
             <div style={{ padding: '6px 10px', borderTop: '1px solid var(--border-color)', background: 'rgba(255,255,255,0.01)', display: 'flex', justifyContent: 'space-between', fontSize: '9px', color: 'var(--text-secondary)' }}>
               <span className="mono">RESOLVED_TRK: 01</span>
@@ -559,13 +615,17 @@ const Cameras = () => {
           </div>
 
           {/* Camera 3 */}
-          <div className="panel" style={{ 
-            position: 'relative', 
-            display: 'flex', 
-            flexDirection: 'column', 
-            overflow: 'hidden',
-            border: isFall ? '1px solid var(--color-critical)' : '1px solid var(--border-color)' 
-          }}>
+          <div className="panel" 
+            onDoubleClick={() => setSelectedCameraId(2)}
+            style={{ 
+              position: 'relative', 
+              display: 'flex', 
+              flexDirection: 'column', 
+              overflow: 'hidden',
+              cursor: 'zoom-in',
+              border: isFall ? '1px solid var(--color-critical)' : '1px solid var(--border-color)' 
+            }}
+          >
             <canvas ref={canvasRefs[2]} width={420} height={220} style={{ width: '100%', flex: 1, objectFit: 'contain' }} />
             <div style={{ padding: '6px 10px', borderTop: '1px solid var(--border-color)', background: 'rgba(255,255,255,0.01)', display: 'flex', justifyContent: 'space-between', fontSize: '9px', color: 'var(--text-secondary)' }}>
               <span className="mono">RESOLVED_TRK: 01</span>
@@ -575,13 +635,17 @@ const Cameras = () => {
           </div>
 
           {/* Camera 4 */}
-          <div className="panel" style={{ 
-            position: 'relative', 
-            display: 'flex', 
-            flexDirection: 'column', 
-            overflow: 'hidden',
-            border: isFire ? '1px solid var(--color-critical)' : '1px solid var(--border-color)' 
-          }}>
+          <div className="panel" 
+            onDoubleClick={() => setSelectedCameraId(3)}
+            style={{ 
+              position: 'relative', 
+              display: 'flex', 
+              flexDirection: 'column', 
+              overflow: 'hidden',
+              cursor: 'zoom-in',
+              border: isFire ? '1px solid var(--color-critical)' : '1px solid var(--border-color)' 
+            }}
+          >
             <canvas ref={canvasRefs[3]} width={420} height={220} style={{ width: '100%', flex: 1, objectFit: 'contain' }} />
             <div style={{ padding: '6px 10px', borderTop: '1px solid var(--border-color)', background: 'rgba(255,255,255,0.01)', display: 'flex', justifyContent: 'space-between', fontSize: '9px', color: 'var(--text-secondary)' }}>
               <span className="mono">RESOLVED_TRK: 00</span>

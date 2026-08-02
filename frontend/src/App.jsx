@@ -1,5 +1,5 @@
-﻿import React, { useState } from 'react';
-import { SafetyProvider } from './context/SafetyContext';
+import React from 'react';
+import { SafetyProvider, useSafety } from './context/SafetyContext';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import Overview from './pages/Overview';
@@ -11,8 +11,8 @@ import './styles/global.css';
 import './styles/dashboard.css';
 import './styles/modules.css';
 
-function App() {
-  const [activePage, setActivePage] = useState('overview');
+function AppContent() {
+  const { activePage, setActivePage } = useSafety();
 
   const renderContent = () => {
     switch (activePage) {
@@ -30,17 +30,23 @@ function App() {
   };
 
   return (
-    <SafetyProvider>
-      <div className="app-container">
-        <Sidebar activePage={activePage} setActivePage={setActivePage} />
-        
-        <div className="main-area">
-          <Header />
-          <main className="content-viewport">
-            {renderContent()}
-          </main>
-        </div>
+    <div className="app-container">
+      <Sidebar activePage={activePage} setActivePage={setActivePage} />
+      
+      <div className="main-area">
+        <Header />
+        <main className="content-viewport">
+          {renderContent()}
+        </main>
       </div>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <SafetyProvider>
+      <AppContent />
     </SafetyProvider>
   );
 }

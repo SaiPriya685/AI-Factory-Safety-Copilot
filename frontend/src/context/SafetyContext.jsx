@@ -16,6 +16,8 @@ export const SafetyProvider = ({ children }) => {
   const [isAudioMuted, setIsAudioMuted] = useState(true);
   const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
   const [uptimeSeconds, setUptimeSeconds] = useState(0);
+  const [activePage, setActivePage] = useState('overview');
+  const [selectedCameraId, setSelectedCameraId] = useState(null);
 
   // Connection & Loading States
   const [isLoading, setIsLoading] = useState(true);
@@ -213,7 +215,11 @@ export const SafetyProvider = ({ children }) => {
       triggerFallDetection,
       triggerFireAlert,
       triggerMachineFailure,
-      resetAllZones
+      resetAllZones,
+      activePage,
+      setActivePage,
+      selectedCameraId,
+      setSelectedCameraId
     }}>
       {children}
     </SafetyContext.Provider>
