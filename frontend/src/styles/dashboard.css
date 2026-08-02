@@ -1,0 +1,302 @@
+/* App layout boxes */
+.app-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.main-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Sidebar Navigation - IBM Plex Sans UI and Navigation */
+.sidebar {
+  width: 240px;
+  background-color: var(--bg-primary);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px;
+  height: 100%;
+  overflow-y: auto;
+  font-family: var(--font-main); /* IBM Plex Sans */
+}
+
+.sidebar-top {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 4px 12px 4px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.logo-icon-svg {
+  width: 14px;
+  height: 14px;
+  color: var(--text-primary);
+}
+
+.logo-text {
+  font-family: var(--font-main); /* IBM Plex Sans for UI */
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+
+.logo-sub {
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+.logo-version {
+  font-size: 8px;
+  color: var(--text-muted);
+  font-family: var(--font-mono); /* JetBrains Mono */
+  border: 1px solid var(--border-color);
+  padding: 1px 3px;
+  border-radius: var(--radius-btn);
+  margin-left: auto;
+}
+
+.nav-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  list-style: none;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: var(--radius-btn);
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  transition: var(--transition-fast);
+}
+
+.nav-item:hover {
+  color: var(--text-primary);
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.nav-item.active {
+  color: var(--text-primary);
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  font-weight: 600;
+}
+
+.nav-item-icon-svg {
+  width: 12px;
+  height: 12px;
+  color: var(--text-secondary);
+  transition: var(--transition-fast);
+}
+
+.nav-item.active .nav-item-icon-svg {
+  color: var(--text-primary);
+}
+
+/* Header layout - Operations bar */
+.header {
+  height: 48px;
+  background-color: var(--bg-primary);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  font-family: var(--font-main); /* IBM Plex Sans */
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.system-status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10.5px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.status-dot-circle {
+  width: 5px;
+  height: 5px;
+}
+
+.status-safe .status-dot-circle { background-color: var(--color-safe); }
+.status-warning .status-dot-circle { background-color: var(--color-warning); }
+.status-critical .status-dot-circle { background-color: var(--color-critical); }
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.clock-panel {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.clock-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.clock-label {
+  font-size: 7.5px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.clock-value {
+  font-size: 11px;
+  color: var(--text-primary);
+  font-weight: 500;
+  font-family: var(--font-mono); /* JetBrains Mono for clocks */
+}
+
+.audio-mute-btn {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-btn);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.audio-mute-btn:hover {
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text-primary);
+  border-color: var(--border-hover);
+}
+
+.audio-mute-btn.active {
+  color: var(--text-primary);
+  border-color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* Main Viewport Container */
+.content-viewport {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  background-color: var(--bg-primary);
+}
+
+/* Simulation Controls */
+.simulator-panel {
+  margin-top: auto;
+  border-top: 1px solid var(--border-color);
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.simulator-title {
+  font-family: var(--font-main); /* IBM Plex Sans */
+  font-size: 8.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+.simulator-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.simulator-btn {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-btn);
+  color: var(--text-secondary);
+  padding: 5px 8px;
+  font-size: 10px;
+  text-align: left;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-main); /* IBM Plex Sans */
+}
+
+.simulator-btn:hover {
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text-primary);
+  border-color: var(--border-hover);
+}
+
+.simulator-btn.critical:hover {
+  border-color: var(--color-critical);
+  color: var(--text-primary);
+}
+
+.simulator-btn-icon {
+  font-size: 7px;
+  color: var(--text-muted);
+}
+
+.simulator-reset-btn {
+  margin-top: 2px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-btn);
+  color: var(--text-primary);
+  padding: 5px 8px;
+  font-family: var(--font-main); /* IBM Plex Sans */
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.simulator-reset-btn:hover {
+  background: var(--border-color);
+  border-color: var(--border-hover);
+}
