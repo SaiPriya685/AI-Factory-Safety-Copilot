@@ -1,6 +1,7 @@
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware  # <--- Added Import
 
 from app.api.auth import router as auth_router
 from app.api.incidents import router as incident_router
@@ -37,6 +38,15 @@ app = FastAPI(
     title=settings.APP_NAME,
     version=settings.API_VERSION,
     lifespan=lifespan,
+)
+
+# <--- Enable CORS Middleware --->
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Local testing ke liye sab allowed hai
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 app.include_router(auth_router)
