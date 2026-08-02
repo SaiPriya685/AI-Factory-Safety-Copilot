@@ -4,11 +4,11 @@
  * Junaid and Priya: Configure these parameters to link the frontend to your services.
  */
 
-// Toggle this to false to stop simulation and connect to the real backend server!
-export const USE_MOCK_DATA = false;
+// Dynamically load settings from Vite environment variables (.env)
+export const USE_MOCK_DATA = import.meta.env.VITE_USE_MOCK_DATA ? import.meta.env.VITE_USE_MOCK_DATA === 'true' : true;
 
-export const BACKEND_HTTP_URL = 'https://factory-safety-backend.onrender.com';
-export const BACKEND_WS_URL = 'wss://factory-safety-backend.onrender.com';
+export const BACKEND_HTTP_URL = import.meta.env.VITE_BACKEND_HTTP_URL || 'http://localhost:8000';
+export const BACKEND_WS_URL = import.meta.env.VITE_BACKEND_WS_URL || 'ws://localhost:8000';
 
 /**
  * Helper to fetch data or fallback to mock if USE_MOCK_DATA is true
