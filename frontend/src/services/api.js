@@ -7,8 +7,8 @@
 // Toggle this to false to stop simulation and connect to the real backend server!
 export const USE_MOCK_DATA = false;
 
-export const BACKEND_HTTP_URL = 'http://localhost:8000';
-export const BACKEND_WS_URL = 'ws://localhost:8000';
+export const BACKEND_HTTP_URL = 'https://factory-safety-backend.onrender.com';
+export const BACKEND_WS_URL = 'wss://factory-safety-backend.onrender.com';
 
 /**
  * Helper to fetch data or fallback to mock if USE_MOCK_DATA is true
