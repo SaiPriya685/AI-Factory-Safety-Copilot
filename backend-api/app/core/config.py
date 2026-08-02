@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     ALGORITHM: str
     ACCESS_TOKEN_EXPIRE_MINUTES: int
 
-    MONGODB_URL: str
+    MONGODB_URL: "mongodb+srv://junaidshah7922_db_user:<QgojhNmG9sS0AkQ0>@cluster0.wshkjxe.mongodb.net/?appName=Cluster0"
     DATABASE_NAME: str
 
     GEMINI_API_KEY: str
