@@ -12,6 +12,7 @@ const Cameras = () => {
 
   const [selectedCameraId, setSelectedCameraId] = useState(null);
   const [isHelmetOff, setIsHelmetOff] = useState(false);
+  const [isCameraActive, setIsCameraActive] = useState(true);
 
   // References for synthetic canvas rendering (Cameras 2, 3, 4)
   const canvasRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
@@ -151,21 +152,51 @@ const Cameras = () => {
             <span className="mono" style={{ fontSize: '11px', fontWeight: 'bold', color: 'var(--color-primary)' }}>
               {cameras[0].id} : {cameras[0].name}
             </span>
-            <span className="mono" style={{ fontSize: '9px', background: 'rgba(0,242,254,0.15)', color: 'var(--color-primary)', padding: '1px 5px', borderRadius: '2px' }}>
-              LIVE AI
-            </span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <button 
+                onClick={(e) => {
+                  e.stopPropagation(); // Avoid triggering double click zoom
+                  setIsCameraActive(!isCameraActive);
+                }}
+                className="simulator-btn"
+                style={{ 
+                  margin: 0, 
+                  padding: '2px 8px', 
+                  fontSize: '9px', 
+                  background: isCameraActive ? 'rgba(255, 74, 74, 0.1)' : 'rgba(0, 242, 254, 0.1)', 
+                  color: isCameraActive ? '#ff4a4a' : 'var(--color-primary)',
+                  borderColor: isCameraActive ? '#ff4a4a' : 'var(--color-primary)'
+                }}
+              >
+                {isCameraActive ? 'TURN OFF' : 'TURN ON'}
+              </button>
+              <span className="mono" style={{ fontSize: '9px', background: 'rgba(0,242,254,0.15)', color: 'var(--color-primary)', padding: '1px 5px', borderRadius: '2px' }}>
+                LIVE AI
+              </span>
+            </div>
           </div>
 
           {/* Video Stream Element */}
           <div style={{ position: 'relative', width: '100%', height: '220px', background: '#000', overflow: 'hidden' }}>
-            <img 
-              src={`${BACKEND_HTTP_URL}/api/ai/stream`} 
-              alt="CAM_A_01 Live AI Stream" 
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-              onError={(e) => {
-                console.log("Reconnecting AI Stream...");
-              }}
-            />
+            {isCameraActive ? (
+              <img 
+                src={`${BACKEND_HTTP_URL}/api/ai/stream`} 
+                alt="CAM_A_01 Live AI Stream" 
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                onError={(e) => {
+                  console.log("Reconnecting AI Stream...");
+                }}
+              />
+            ) : (
+              <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', background: '#090b0d', color: '#ff4a4a', gap: '10px' }}>
+                <svg style={{ width: '32px', height: '32px' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M16 16v1a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7" />
+                  <path d="M23 19l-6-4V9l6-4v14z" />
+                  <line x1="1" y1="1" x2="23" y2="23" />
+                </svg>
+                <span className="mono" style={{ fontSize: '9px', color: 'var(--text-muted)' }}>SURVEILLANCE SUSPENDED FOR SAFETY</span>
+              </div>
+            )}
           </div>
 
           {/* Telemetry Footer */}
@@ -248,11 +279,22 @@ const Cameras = () => {
 
           <div style={{ flex: 1, border: '1px solid var(--border-color)', borderRadius: '4px', overflow: 'hidden', background: '#000', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             {selectedCameraId === 0 ? (
-              <img 
-                src={`${BACKEND_HTTP_URL}/api/ai/stream`} 
-                alt="Focused CAM_A_01 Stream" 
-                style={{ width: '100%', height: '100%', objectFit: 'contain' }} 
-              />
+              isCameraActive ? (
+                <img 
+                  src={`${BACKEND_HTTP_URL}/api/ai/stream`} 
+                  alt="Focused CAM_A_01 Stream" 
+                  style={{ width: '100%', height: '100%', objectFit: 'contain' }} 
+                />
+              ) : (
+                <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', background: '#090b0d', color: '#ff4a4a', gap: '15px' }}>
+                  <svg style={{ width: '64px', height: '64px' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M16 16v1a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7" />
+                    <path d="M23 19l-6-4V9l6-4v14z" />
+                    <line x1="1" y1="1" x2="23" y2="23" />
+                  </svg>
+                  <span className="mono" style={{ fontSize: '14px', color: 'var(--text-muted)' }}>SURVEILLANCE SUSPENDED FOR SAFETY</span>
+                </div>
+              )
             ) : (
               <canvas 
                 ref={canvasRefs[selectedCameraId]} 
