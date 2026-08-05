@@ -249,7 +249,7 @@ const Cameras = () => {
           <div style={{ flex: 1, border: '1px solid var(--border-color)', borderRadius: '4px', overflow: 'hidden', background: '#000', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             {selectedCameraId === 0 ? (
               <img 
-                src="http://localhost:8000/api/ai/stream" 
+                src="https://ai-factory-safety-copilot.onrender.com/api/ai/stream" 
                 alt="Focused CAM_A_01 Stream" 
                 style={{ width: '100%', height: '100%', objectFit: 'contain' }} 
               />
