@@ -12,6 +12,7 @@ from app.api.machines import router as machine_router
 from app.api.sensors import router as sensor_router
 from app.websocket.routes import router as websocket_router
 from app.api.ai import router as ai_router
+from app.api.simulator import router as simulator_router
 from app.core.config import settings
 from app.core.logger import logger
 from app.database.database import (
@@ -58,6 +59,7 @@ app.include_router(machine_router)
 app.include_router(sensor_router)
 app.include_router(websocket_router)
 app.include_router(ai_router)
+app.include_router(simulator_router)
 
 @app.get("/")
 async def home():

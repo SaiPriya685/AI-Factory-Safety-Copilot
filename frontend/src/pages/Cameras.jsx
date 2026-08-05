@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Camera, RefreshCw, ZoomIn, Eye } from 'lucide-react';
+import { BACKEND_HTTP_URL } from '../services/api';
 
 const Cameras = () => {
   const [cameras, setCameras] = useState([
@@ -158,7 +159,7 @@ const Cameras = () => {
           {/* Video Stream Element */}
           <div style={{ position: 'relative', width: '100%', height: '220px', background: '#000', overflow: 'hidden' }}>
             <img 
-              src="http://localhost:8000/api/ai/stream" 
+              src={`${BACKEND_HTTP_URL}/api/ai/stream`} 
               alt="CAM_A_01 Live AI Stream" 
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               onError={(e) => {
