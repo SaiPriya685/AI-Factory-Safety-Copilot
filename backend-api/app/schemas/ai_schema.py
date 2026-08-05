@@ -8,3 +8,6 @@ class DetectionRequest(BaseModel):
     confidence: float
     risk_score: int
     image_url: str
+
+class AIQueryRequest(BaseModel):
+    query: str

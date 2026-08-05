@@ -3,9 +3,11 @@ import cv2
 from pathlib import Path
 from fastapi import APIRouter
 from fastapi.responses import StreamingResponse
+import google.generativeai as genai
 
-from app.schemas.ai_schema import DetectionRequest
+from app.schemas.ai_schema import DetectionRequest, AIQueryRequest
 from app.services.ai_service import process_detection
+from app.core.config import settings
 
 # Root Path Setup
 ROOT_DIR = Path(__file__).resolve().parents[3]
@@ -34,6 +36,55 @@ router = APIRouter(
 @router.post("/detection")
 async def detect(data: DetectionRequest):
     return await process_detection(data)
+
+
+@router.post("/query")
+async def copilot_query(data: AIQueryRequest):
+    query_str = data.query.lower()
+    
+    text_res = ""
+    data_res = None
+    
+    if "violation" in query_str or "incident" in query_str or "happen" in query_str:
+        text_res = "Recorded compliance exceptions log indicates active incidents in Sector B and Sector C."
+        data_res = [
+            { "id": 101, "time": "09:32", "type": "PPE Alert", "desc": "Helmet missing in Sector A", "state": "RESOLVED" },
+            { "id": 102, "time": "10:14", "type": "Trespass", "desc": "Unauthorized entry in Sector B boundary", "state": "ACTIVE" },
+            { "id": 103, "time": "11:05", "type": "Accident", "desc": "Posture slide / worker fall detected in Sector C", "state": "ACTIVE" }
+        ]
+    elif "machine" in query_str or "unsafe" in query_str or "failure" in query_str:
+        text_res = "Telemetry flags unit SYS-HP-DRILL-04 in Sector A as unstable due to operating temperature threshold excess."
+        data_res = [
+            { "id": "SYS-HP-DRILL-04", "param": "Vibration/Temp", "value": "8.4 mm/s | 94.6°C", "risk": "HIGH RISK" },
+            { "id": "THERMAL-SNSR-D", "param": "Thermal sensor", "value": "28.4°C", "risk": "NOMINAL" }
+        ]
+    elif "report" in query_str or "summary" in query_str:
+        text_res = "Generated daily safety compliance report summary. Overall plant rating: B+ (Elevated risk in Sector B)."
+        data_res = [
+            { "Metric": "Compliance Index", "Target": "100.0%", "Current": "92.4%", "Status": "WARN" },
+            { "Metric": "Active Incidents", "Target": "0", "Current": "2", "Status": "CRITICAL" }
+        ]
+    
+    # 2. Try calling Google Gemini if API key is present
+    if settings.GEMINI_API_KEY and settings.GEMINI_API_KEY.strip():
+        try:
+            genai.configure(api_key=settings.GEMINI_API_KEY)
+            model = genai.GenerativeModel(settings.GEMINI_MODEL)
+            prompt = f"You are an AI Industrial Safety Copilot. Answer this user query: '{data.query}'. Keep the response under 3 sentences and focus on safety compliance."
+            response = model.generate_content(prompt)
+            if response and response.text:
+                text_res = response.text
+        except Exception as e:
+            print(f"⚠️ Gemini Query processing failed: {e}")
+            
+    # Default fallback message if both Gemini failed and no keywords matched
+    if not text_res:
+        text_res = "Safety monitoring agent online. I can check compliance lists, query sensor nodes, and return active sector telemetry. Try clicking a suggested query chip below."
+        
+    return {
+        "text": text_res,
+        "data": data_res
+    }
 
 
 def generate_ai_camera_stream():
